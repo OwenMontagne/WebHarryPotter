@@ -1,4 +1,3 @@
-<!-- NavBar.vue -->
 <template>
   <div>
     <router-link to="/">Accueil</router-link>
@@ -11,6 +10,6 @@
 
 <script>
 export default {
-  name: 'PageNavBar'
+  name: 'NavBar'
 }
 </script>

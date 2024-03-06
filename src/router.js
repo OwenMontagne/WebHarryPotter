@@ -1,40 +1,35 @@
-// router.js
-import Vue from 'vue';
-import Router from 'vue-router';
-import Accueil from './components/Accueil.vue'; // Chemin ajusté pour refléter la structure de dossiers
-import Livres from './components/Livres.vue';
-import Personnages from './components/Personnages.vue';
-import Potions from './components/Potions.vue';
-import Sorts from './components/Sorts.vue';
+import { createApp } from 'vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
-Vue.use(Router);
+const routes = [
+    {
+        path: '/',
+        component: () => import('./components/Accueil.vue'),
+    },
+    {
+        path: '/livres',
+        component: () => import('./components/Livres.vue'),
+    },
+    {
+        path: '/personnages',
+        component: () => import('./components/Personnages.vue'),
+    },
+    {
+        path: '/potions',
+        component: () => import('./components/Potions.vue'),
+    },
+    {
+        path: '/sorts',
+        component: () => import('./components/Sorts.vue'),
+    },
+];
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'PageAccueil',
-      component: Accueil
-    },
-    {
-      path: '/livres',
-      name: 'PageLivres',
-      component: Livres
-    },
-    {
-      path: '/personnages',
-      name: 'PagePersonnages',
-      component: Personnages
-    },
-    {
-      path: '/potions',
-      name: 'PagePotions',
-      component: Potions
-    },
-    {
-      path: '/sorts',
-      name: 'PageSorts',
-      component: Sorts
-    }
-  ]
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes,
 });
+
+const app = createApp();
+app.use(router);
+
+export default router;
