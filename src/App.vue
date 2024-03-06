@@ -1,30 +1,23 @@
 <template>
   <div id="app">
-    <NavBar />
-    <router-view />
+    <PageNavBar />
+    <router-view /> <!-- Cette balise affichera le composant correspondant à la route active -->
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue';
-import router from './router';
+import PageNavBar from './components/NavBar.vue'; // Importez votre composant NavBar
+import router from './router'; // Importez votre configuration de routeur
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    PageNavBar
   },
   router
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+/* Vos styles */
 </style>
