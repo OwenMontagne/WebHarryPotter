@@ -21,6 +21,8 @@
         </li>
       </ul>
     </div>
+    <h1>Personnages</h1>
+    <p>Bienvenue sur notre site dédié à l'univers d'Harry Potter.</p>
   </div>
 </template>
 
@@ -116,4 +118,12 @@ body {
   text-align: center;
   background-color: rgb(192, 157, 136);
 }
+</style>
+export default {
+  name: 'PagePersonnages'
+}
+</script>
+
+<style scoped>
+/* Styles spécifiques à ce composant */
 </style>
