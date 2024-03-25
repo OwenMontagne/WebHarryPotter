@@ -1,35 +1,39 @@
-import { createApp } from 'vue';
-import { createRouter, createWebHashHistory } from 'vue-router';
-
-const routes = [
-    {
-        path: '/',
-        component: () => import('./components/Accueil.vue'),
-    },
-    {
-        path: '/livres',
-        component: () => import('./components/Livres.vue'),
-    },
-    {
-        path: '/personnages',
-        component: () => import('./components/Personnages.vue'),
-    },
-    {
-        path: '/potions',
-        component: () => import('./components/Potions.vue'),
-    },
-    {
-        path: '/sorts',
-        component: () => import('./components/Sorts.vue'),
-    },
-];
+import { createRouter, createWebHistory } from 'vue-router';
+import Accueil from '@/components/Accueil.vue';
+import Potions from '@/components/Potions.vue';
+import Sorts from '@/components/Sorts.vue';
+import Livres from '@/components/Livres.vue';
+import Personnages from '@/components/Personnages.vue';
 
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes,
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'Accueil',
+      component: Accueil
+    },
+    {
+      path: '/potions',
+      name: 'Potions',
+      component: Potions
+    },
+    {
+      path: '/sorts',
+      name: 'Sorts',
+      component: Sorts
+    },
+    {
+      path: '/livres',
+      name: 'Livres',
+      component: Livres
+    },
+    {
+      path: '/personnages',
+      name: 'Personnages',
+      component: Personnages
+    }
+  ]
 });
-
-const app = createApp();
-app.use(router);
 
 export default router;

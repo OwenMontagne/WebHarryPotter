@@ -1,16 +1,20 @@
 <template>
   <div>
-    <h1>Page d'accueil</h1>
-    <p>Bienvenue sur notre site dédié à l'univers d'Harry Potter.</p>
+    <h1>Encyclopédie Harry Potter</h1>
+    <p>Bienvenue dans l'encyclopédie interactive de l'univers de Harry Potter. Explorez les différentes sections :</p>
+    <router-link to="/potions">Potions</router-link>
+    <router-link to="/sorts">Sorts</router-link>
+    <router-link to="/livres">Livres</router-link>
+    <router-link to="/personnages">Personnages</router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PageAccueil'
+  name: 'AccueilView'
 }
 </script>
 
 <style scoped>
-/* Styles spécifiques à ce composant */
+/* Vos styles ici */
 </style>

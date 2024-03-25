@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Personnages</h1>
+    <p>Bienvenue sur notre site dédié à l'univers d'Harry Potter.</p>
     <input v-model="searchQuery" placeholder="Rechercher un personnage" />
     <div>
       <p>
@@ -21,8 +23,7 @@
         </li>
       </ul>
     </div>
-    <h1>Personnages</h1>
-    <p>Bienvenue sur notre site dédié à l'univers d'Harry Potter.</p>
+   
   </div>
 </template>
 
@@ -37,7 +38,7 @@ export default defineComponent({
       allPersonnages: [],
       currentPage: 1,
       itemsPerPage: 30,
-      totalPages: 1,
+      totalPages: 0,
       searchQuery: '',
       desiredPage: 1,
     };
@@ -119,10 +120,7 @@ body {
   background-color: rgb(192, 157, 136);
 }
 </style>
-export default {
-  name: 'PagePersonnages'
-}
-</script>
+
 
 <style scoped>
 /* Styles spécifiques à ce composant */
