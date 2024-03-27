@@ -1,0 +1,31 @@
+# Titre du Projet
+
+## Description
+
+Le projet est un site web en Vue.JS qui est connecter à l'API HarryPotter, 
+le site permet de rechercher les différents personnages de la saga, les potions, livres et sorts
+et d'afficher des informations, il y a aussi un lien vers le wiki pour les livres
+
+## Installation
+
+1. Clonez ce dépôt sur votre machine locale :
+
+```bash
+git clone https://github.com/OwenMontagne/WebHarryPotter.git
+
+2. Installer les dépendances :
+
+cd repository
+npm install
+
+3. Lancer le serveur 
+
+npm run serveur
+
+
+### Structure du projet
+
+src/: Contient le code source de l'application.
+components/: Contient les composants Vue.js réutilisables.
+router/: Contient la configuration du routeur Vue.js.
+package.json: Contient la liste des dépendances du projet et les scripts npm.
