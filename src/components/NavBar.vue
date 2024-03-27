@@ -18,7 +18,7 @@ export default {
 .navbar {
   display: flex;
   align-items: center;
-  background-color: #333;
+  background-color: #a1a1a1;
   width: 100%;
   top: 0; left: 0;
   padding: 20px;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>sort</h1>
+    <h1>Sort</h1>
     <p>Bienvenue sur notre site dédié à l'univers d'Harry Potter.</p>
     <input v-model="searchQuery" placeholder="Rechercher une potion" />
     <div>
@@ -107,7 +107,7 @@ export default {
 
 <style>
 body {
-  background-color: rgba(28, 28, 28, 0.814);
+  background-color: rgba(255, 255, 255, 0.814);
 }
 
 .potions-list {

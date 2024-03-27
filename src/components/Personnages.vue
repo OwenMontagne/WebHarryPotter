@@ -21,7 +21,6 @@
           <p><strong>Genre:</strong> {{ personnage.attributes.gender }}</p>
           <p><strong>Né en:</strong> {{ personnage.attributes.born }}</p>
           <p><strong>Métiers:</strong> {{ personnage.attributes.jobs?.join(', ') }}</p>
-          
         </li>
       </ul>
     </div>
