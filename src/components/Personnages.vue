@@ -17,86 +17,123 @@
           <h3>{{ personnage.attributes.name }}</h3>
           <img v-if="personnage.attributes.image" :src="personnage.attributes.image" alt="Image du personnage" />
           <p><strong>Nom :</strong> {{ personnage.attributes.name }}</p>
-          <p><strong>Alias :</strong> {{ personnage.attributes.alias_names.join(', ') }}</p>
-          <p><strong>Travail :</strong> {{ formatJobs(personnage.attributes.jobs) }}</p>
-          <p><strong>Biographie :</strong> {{ generateBiography(personnage.attributes) }}</p>
+          <p><strong>Maison:</strong> {{ personnage.attributes.house }}</p>
+          <p><strong>Genre:</strong> {{ personnage.attributes.gender }}</p>
+          <p><strong>Né en:</strong> {{ personnage.attributes.born }}</p>
+          <p><strong>Métiers:</strong> {{ personnage.attributes.jobs?.join(', ') }}</p>
+          
         </li>
       </ul>
     </div>
-   
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
 import axios from 'axios';
 
-export default defineComponent({
-  name: 'PagePersonnages',
+export default {
+  name: 'ListePersonnages',
   data() {
     return {
-      allPersonnages: [],
+      personnages: [],
       currentPage: 1,
-      itemsPerPage: 30,
-      totalPages: 0,
-      searchQuery: '',
       desiredPage: 1,
+      totalPages: 47,
+      loading: false,
+      searchQuery: '',
     };
   },
   computed: {
     filteredPersonnages() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-
-      return this.allPersonnages
-        .filter(personnage =>
-          personnage.attributes.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        )
-        .slice(start, end);
+      return this.personnages.filter(personnage => {
+        return personnage.attributes.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      });
     },
-    isValidPage() {
+      isValidPage() {
       return this.desiredPage >= 1 && this.desiredPage <= this.totalPages;
     },
   },
-  methods: {
-    async getAllPersonnages() {
-      try {
-        const response = await axios.get(`https://api.potterdb.com/v1/characters`);
-        this.allPersonnages = response.data.data;
-        this.calculateTotalPages();
-      } catch (error) {
-        console.error('Erreur lors de la récupération de tous les personnages :', error);
-      }
-    },
-    calculateTotalPages() {
-      this.totalPages = Math.ceil(this.allPersonnages.length / this.itemsPerPage);
-    },
-    loadNextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage += 1;
+  mounted() {
+    this.fetchPage(this.currentPage);
+  },
+    methods: {
+      fetchPage(pageNumber) {
+      this.loading = true;
+      
+      if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+        axios.get(`https://api.potterdb.com/v1/characters?page[number]=${pageNumber}`)
+          .then(response => {
+            console.log('Données de l\'API:', response.data);
+            this.personnages = response.data.data;
+            this.currentPage = pageNumber;
+
+            const linkHeader = response.headers.link;
+            if (linkHeader) {
+              const totalPagesMatch = linkHeader.match(/page=(\d+)>; rel="last"/);
+              if (totalPagesMatch) {
+                this.totalPages = parseInt(totalPagesMatch[1]);
+              }
+            }
+          })
+          .catch(error => {
+            console.error('Erreur lors de la récupération des personnages:', error);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
       }
     },
     loadPreviousPage() {
       if (this.currentPage > 1) {
-        this.currentPage -= 1;
+        this.fetchPage(this.currentPage - 1);
+      }
+    },
+    loadNextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.fetchPage(this.currentPage + 1);
       }
     },
     goToPage() {
       if (this.isValidPage) {
-        this.currentPage = this.desiredPage;
+        this.fetchPage(this.desiredPage);
       }
     },
-    generateBiography(attributes) {
-      return `Born ${attributes.born}`;
-    },
-    formatJobs(jobs) {
-      return jobs.join(', ');
+    search() {
+      this.loading = true;
+      this.personnages = []; // Clear existing data
+
+      let pageNumber = 1;
+      const fetchPage = () => {
+        axios.get('https://api.potterdb.com/v1/characters', {
+          params: {
+            'filter[name_cont]': this.searchQuery,
+            'page[number]': pageNumber,
+          }
+        })
+        .then(response => {
+          console.log('Résultats de la recherche:', response.data);
+          this.personnages = this.personnages.concat(response.data.data);
+
+          const linkHeader = response.headers.link;
+          if (linkHeader && linkHeader.includes('rel="next"')) {
+            // There is a next page, fetch it
+            pageNumber++;
+            fetchPage();
+          } else {
+            // No next page, done loading
+            this.loading = false;
+          }
+        })
+        .catch(error => {
+          console.error('Erreur lors de la recherche des personnages:', error);
+          this.loading = false;
+        });
+      };
+
+      fetchPage();
     },
   },
-  mounted() {
-    this.getAllPersonnages();
-  },
-});
+};
 </script>
 
 <style>
